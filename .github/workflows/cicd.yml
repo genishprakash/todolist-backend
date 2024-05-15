@@ -30,4 +30,4 @@ jobs:
       - name: Delete old container
         run: docker rm -f todolist-backend-container  
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name todolist-backend-container -e MONGO_PASSWORD=`${{ secrets.MONGO_PASSWORD }}` genishprakash/todolist-backend
+        run: docker run -d -p 4000:4000 --name todolist-backend-container -e MONGO_PASSWORD="${{ secrets.MONGO_PASSWORD }}" genishprakash/todolist-backend
