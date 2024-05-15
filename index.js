@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const PORT=4000
 
 
-conndb()
+
 
 app.get('/', (req, res) => {
     res.send('Hello World, from express');
