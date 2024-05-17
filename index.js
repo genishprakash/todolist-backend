@@ -17,8 +17,13 @@ connectdb()
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World, from express');
-})
+    const data = 200; // Value you want to send
+    console.log('Sending response:', data);
+    
+    res.send({ value: data });
+});
+
+
 
 app.listen(PORT,()=>{
     console.log(`Sever listening on port :${PORT}`)
