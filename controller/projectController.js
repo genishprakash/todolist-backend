@@ -1,9 +1,10 @@
 const asyncHandler = require("express-async-handler")
-const Projects = require("../models/projectsModal")
+const Project = require("../models/projectsModal")
+const Task = require("../models/TaskModel")
 const getProjectController=asyncHandler(async(req,res) =>{
     try {
     
-        const projects = await Projects.find().populate('tasks');
+        const projects = await Project.find().populate('tasks');
         res.json(projects);
       } catch (err) {
         res.status(500).json({ message: err.message });
@@ -11,7 +12,7 @@ const getProjectController=asyncHandler(async(req,res) =>{
 })
 
 const postProjectController=asyncHandler(async(req,res) =>{
-    const project = new Projects(req.body);
+    const project = new Project(req.body);
     console.log(project)
     try {
         const createdProject = await project.save();
@@ -23,7 +24,7 @@ const postProjectController=asyncHandler(async(req,res) =>{
 
 const getProjectControllerById = asyncHandler(async (req, res) => {
     try {
-      const project = await Projects.findById(req.params.id).populate('tasks');
+      const project = await Project.findById(req.params.id).populate('tasks');
       if (!project) {
         return res.status(404).json({ message: 'Project not found' });
       }
@@ -37,7 +38,7 @@ const getProjectControllerById = asyncHandler(async (req, res) => {
  const deleteProjectController =asyncHandler( async (req, res) => {
     try {
       const { id } = req.params;
-      const deletedProject = await Projects.findByIdAndDelete(id);
+      const deletedProject = await Project.findByIdAndDelete(id);
   
       if (!deletedProject) {
         return res.status(404).json({ message: 'Project not found' });
@@ -58,7 +59,7 @@ const getProjectControllerById = asyncHandler(async (req, res) => {
       const { id } = req.params;
       
   
-      const updatedProject = await Projects.findByIdAndUpdate(id, req.body, {
+      const updatedProject = await Project.findByIdAndUpdate(id, req.body, {
         new: true,
         runValidators: true,
       });

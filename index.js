@@ -22,7 +22,7 @@ connectdb()
 //     res.send({ value: data });
 // });
 app.use("/api/projects",require("./routes/projects"))
-//app.use("/api/tasks",require("./routes/tasks"))
+app.use("/api/tasks",require("./routes/tasks"))
 
 
 
