@@ -31,4 +31,24 @@ const getTaskController = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = { postTaskController, getTaskController }
+const deleteTaskController = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedTask = await Tasks.findByIdAndDelete(id);
+        if (!deletedTask) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+        const project = await Project.findById(deletedTask.project);
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+        project.tasks.pull(deletedTask._id);
+        await project.save();
+        res.json({ message: 'Task deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting task:', error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+module.exports = { postTaskController, getTaskController ,deleteTaskController}
